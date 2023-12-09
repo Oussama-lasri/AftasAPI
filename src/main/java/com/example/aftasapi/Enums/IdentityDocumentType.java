@@ -1,2 +1,4 @@
-package com.example.aftasapi.Enums;public enum IdentityDocumentType {
+package com.example.aftasapi.Enums;
+
+public enum IdentityDocumentType {
 }
