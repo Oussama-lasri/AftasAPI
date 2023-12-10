@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompetitionServiceImpl implements ICompetitionService {
@@ -62,7 +63,7 @@ public class CompetitionServiceImpl implements ICompetitionService {
     @Override
     public List<CompetitionDTO> findAll() {
         List<CompetitionEntity> competitionEntityList = competitionRepository.findAll();
-        List<CompetitionDTO> competitionDTOList = (List<CompetitionDTO>) competitionEntityList.stream().map(competition -> modelMapper.map(competition,CompetitionDTO.class));
+        List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> modelMapper.map(competition,CompetitionDTO.class)).collect(Collectors.toList());
         return competitionDTOList;
     }
 
