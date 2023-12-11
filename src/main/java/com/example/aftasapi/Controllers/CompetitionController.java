@@ -3,7 +3,9 @@ package com.example.aftasapi.Controllers;
 import com.example.aftasapi.DTOs.CompetitionDTO;
 import com.example.aftasapi.Requests.CompetitionRequest;
 import com.example.aftasapi.Services.ICompetitionService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,15 +24,15 @@ public class CompetitionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createCompetition(@RequestBody CompetitionRequest competitionRequest){
+    public ResponseEntity<CompetitionDTO> createCompetition(@Valid @RequestBody CompetitionRequest competitionRequest){
         CompetitionDTO competitionDTO = competitionService.create(modelMapper.map(competitionRequest,CompetitionDTO.class));
-        return ResponseEntity.ok().body("created " + competitionDTO.getCode()) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body(competitionDTO);
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllCompetition(){
+    public ResponseEntity<List<CompetitionDTO>> getAllCompetition(){
         List<CompetitionDTO> competitions = competitionService.findAll();
-        return ResponseEntity.ok().body(competitions);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(competitions);
     }
 
 
