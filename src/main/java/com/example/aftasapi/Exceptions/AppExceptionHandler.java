@@ -12,8 +12,13 @@ import java.util.Date;
 
 @ControllerAdvice
 public class AppExceptionHandler {
-    @ExceptionHandler(value = {MemberException.class , HuntingException.class})
+    @ExceptionHandler(value = {MemberException.class })
     public ResponseEntity<Object> handlerMemberException(MemberException ex , WebRequest request){
+        ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
+        return new ResponseEntity<>(errorMessage,new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @ExceptionHandler(value = { HuntingException.class })
+    public ResponseEntity<Object> handlerHuntingException(HuntingException ex , WebRequest request){
         ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
         return new ResponseEntity<>(errorMessage,new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
