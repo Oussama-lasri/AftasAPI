@@ -12,7 +12,7 @@ import java.util.Date;
 
 @ControllerAdvice
 public class AppExceptionHandler {
-    @ExceptionHandler(value = {MemberException.class})
+    @ExceptionHandler(value = {MemberException.class , HuntingException.class})
     public ResponseEntity<Object> handlerMemberException(MemberException ex , WebRequest request){
         ErrorMessage errorMessage = new ErrorMessage(new Date(), ex.getMessage());
         return new ResponseEntity<>(errorMessage,new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -34,7 +34,6 @@ public class MemberController {
                 || memberRequest.getAccessionDate() == null ){
 
             throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
-
         }
         MemberDTO memberDTO = memberService.create(modelMapper.map(memberRequest,MemberDTO.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(memberDTO);
