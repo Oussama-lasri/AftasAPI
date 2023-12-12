@@ -31,7 +31,7 @@ public class MemberController {
                 || memberRequest.getFamilyName().isEmpty()
                 || memberRequest.getIdentityNumber().isEmpty()
                 || memberRequest.getIdentityDocument() == null
-                || memberRequest.getAccessionDate() == null){
+                || memberRequest.getAccessionDate() == null ){
 
             throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
 
