@@ -2,6 +2,8 @@ package com.example.aftasapi.Controllers;
 
 import com.example.aftasapi.DTOs.CompetitionDTO;
 import com.example.aftasapi.DTOs.MemberDTO;
+import com.example.aftasapi.Errors.ErrorMessageMember;
+import com.example.aftasapi.Exceptions.MemberException;
 import com.example.aftasapi.Requests.MemberRequest;
 import com.example.aftasapi.Services.IMemberService;
 import jakarta.validation.Valid;
@@ -25,6 +27,15 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberRequest memberRequest){
+        if (    memberRequest.getName().isEmpty()
+                || memberRequest.getFamilyName().isEmpty()
+                || memberRequest.getIdentityNumber().isEmpty()
+                || memberRequest.getIdentityDocument() == null
+                || memberRequest.getAccessionDate() == null){
+
+            throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
+
+        }
         MemberDTO memberDTO = memberService.create(modelMapper.map(memberRequest,MemberDTO.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(memberDTO);
     }
