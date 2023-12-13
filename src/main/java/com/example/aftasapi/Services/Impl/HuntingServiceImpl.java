@@ -22,7 +22,7 @@ public class HuntingServiceImpl implements IHuntingService {
     }
 
     @Override
-    public HuntingDTO upadte(long hunting_id, HuntingDTO huntingDTO) {
+    public HuntingDTO update(long hunting_id, HuntingDTO huntingDTO) {
         return null;
     }
 

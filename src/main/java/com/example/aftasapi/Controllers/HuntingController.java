@@ -36,7 +36,7 @@ public class HuntingController {
     @PostMapping
     public ResponseEntity<HuntingDTO> createHunting(@RequestBody HuntingRequest huntingRequest){
 
-        if(true){
+        if(huntingRequest.getCompetition_code().isEmpty()  || numberValidator.isNonZeroNonNull(huntingRequest.getFish_id()) || numberValidator.isNonZeroNonNull(huntingRequest.getMember_num())){
             throw new HuntingException(ErrorMessageHunting.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
 

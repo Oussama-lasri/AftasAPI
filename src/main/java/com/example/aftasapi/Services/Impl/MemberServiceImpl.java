@@ -23,6 +23,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public MemberDTO create(MemberDTO memberDTO) {
+
         MemberEntity member = modelMapper.map(memberDTO,MemberEntity.class);
         MemberEntity memberCreated ;
         try{
@@ -46,7 +47,7 @@ public class MemberServiceImpl implements IMemberService {
     }
 
     @Override
-    public void delete(MemberDTO memberDTO) {
+    public void delete(long id) {
 
     }
 

@@ -27,6 +27,8 @@ public class CompetitionServiceImpl implements ICompetitionService {
 
     @Override
     public CompetitionDTO create(CompetitionDTO competitionDTO){
+
+
         CompetitionEntity competition = modelMapper.map(competitionDTO,CompetitionEntity.class);
         competition.setCode(codeCompetition(competitionDTO));
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IHuntingService  {
     public HuntingDTO create(HuntingDTO huntingDTO);
-    public HuntingDTO upadte(long hunting_id,HuntingDTO huntingDTO);
+    public HuntingDTO update(long hunting_id,HuntingDTO huntingDTO);
     public HuntingDTO findHuntingById(long id);
     public void delete(HuntingDTO huntingDTO);
     public List<HuntingDTO> findAll();

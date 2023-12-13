@@ -11,7 +11,7 @@ public class GenerateCode {
     @Bean
     public String codeCompetition(CompetitionDTO competitionDTO ){
         if(competitionDTO.getLocation() != null)
-            return competitionDTO.getLocation()+":pattern:"+competitionDTO.getLocation().substring(0,3)+"-"+competitionDTO.getDate() ;
+            return competitionDTO.getLocation().trim()+":"+competitionDTO.getLocation().substring(0,3)+"-"+competitionDTO.getDate() ;
         return null ;
     }
 

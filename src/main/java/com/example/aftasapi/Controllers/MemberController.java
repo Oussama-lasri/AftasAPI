@@ -32,7 +32,6 @@ public class MemberController {
                 || memberRequest.getIdentityNumber().isEmpty()
                 || memberRequest.getIdentityDocument() == null
                 || memberRequest.getAccessionDate() == null ){
-
             throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
         MemberDTO memberDTO = memberService.create(modelMapper.map(memberRequest,MemberDTO.class));
@@ -59,7 +58,11 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(memberUpdated);
     }
 
-  //  @DeleteMapping
+   @DeleteMapping("{memberId}")
+   public ResponseEntity<?> deleteMember(@PathVariable long memberId){
+       memberService.delete(memberId);
+       return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+   }
 
 
 

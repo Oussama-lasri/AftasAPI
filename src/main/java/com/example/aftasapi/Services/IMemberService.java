@@ -8,6 +8,6 @@ public interface IMemberService {
     public MemberDTO create(MemberDTO memberDTO);
     public MemberDTO update(long id,MemberDTO memberDTO);
     public MemberDTO findMemberById(long id);
-    public void delete(MemberDTO memberDTO);
+    public void delete(long id);
     public List<MemberDTO> findAll();
 }
