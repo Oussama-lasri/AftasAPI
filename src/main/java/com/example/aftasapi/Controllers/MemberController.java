@@ -2,6 +2,7 @@ package com.example.aftasapi.Controllers;
 
 import com.example.aftasapi.DTOs.CompetitionDTO;
 import com.example.aftasapi.DTOs.MemberDTO;
+import com.example.aftasapi.Enums.IdentityDocumentType;
 import com.example.aftasapi.Errors.ErrorMessageMember;
 import com.example.aftasapi.Exceptions.MemberException;
 import com.example.aftasapi.Requests.MemberRequest;
@@ -34,6 +35,9 @@ public class MemberController {
                 || memberRequest.getAccessionDate() == null ){
             throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
         }
+
+
+
         MemberDTO memberDTO = memberService.create(modelMapper.map(memberRequest,MemberDTO.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(memberDTO);
     }

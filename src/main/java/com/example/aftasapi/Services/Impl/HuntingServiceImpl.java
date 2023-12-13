@@ -18,6 +18,8 @@ public class HuntingServiceImpl implements IHuntingService {
 
     @Override
     public HuntingDTO create(HuntingDTO huntingDTO) {
+
+
         return null;
     }
 

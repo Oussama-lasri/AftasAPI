@@ -15,9 +15,10 @@ import java.util.stream.Collectors;
 @Service
 public class CompetitionServiceImpl implements ICompetitionService {
 
-    private final CompetitionRepository competitionRepository ;
-    private final ModelMapper modelMapper ;
+    private final CompetitionRepository competitionRepository;
+    private final ModelMapper modelMapper;
     private final GenerateCode generateCode;
+
     @Autowired
     public CompetitionServiceImpl(CompetitionRepository competitionRepository, ModelMapper modelMapper, GenerateCode generateCode) {
         this.competitionRepository = competitionRepository;
@@ -26,13 +27,13 @@ public class CompetitionServiceImpl implements ICompetitionService {
     }
 
     @Override
-    public CompetitionDTO create(CompetitionDTO competitionDTO){
+    public CompetitionDTO create(CompetitionDTO competitionDTO) {
 
 
-        CompetitionEntity competition = modelMapper.map(competitionDTO,CompetitionEntity.class);
-        competition.setCode(codeCompetition(competitionDTO));
+        CompetitionEntity competition = modelMapper.map(competitionDTO, CompetitionEntity.class);
+        competition.setCode(generateCode.codeCompetition(competitionDTO));
 
-        // exception for create competition
+
         CompetitionEntity competitionCreated;
         try {
             competitionCreated = competitionRepository.save(competition);
@@ -40,11 +41,11 @@ public class CompetitionServiceImpl implements ICompetitionService {
             throw new RuntimeException("Error saving competition : ", e);
         }
 
-        CompetitionDTO competitionDTO1 = modelMapper.map(competitionCreated,CompetitionDTO.class);
+        CompetitionDTO competitionDTO1 = modelMapper.map(competitionCreated, CompetitionDTO.class);
 
-       // use log
+        // use log
         // ...........
-        return competitionDTO1 ;
+        return competitionDTO1;
     }
 
     @Override
@@ -65,11 +66,8 @@ public class CompetitionServiceImpl implements ICompetitionService {
     @Override
     public List<CompetitionDTO> findAll() {
         List<CompetitionEntity> competitionEntityList = competitionRepository.findAll();
-        List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> modelMapper.map(competition,CompetitionDTO.class)).collect(Collectors.toList());
+        List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
         return competitionDTOList;
     }
-
-    public String codeCompetition(CompetitionDTO competitionDTO ){
-            return competitionDTO.getLocation()+":pattern:"+competitionDTO.getLocation().substring(0,3)+"-"+competitionDTO.getDate() ;
-    }
 }
+

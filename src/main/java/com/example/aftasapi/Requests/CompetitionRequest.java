@@ -1,5 +1,6 @@
 package com.example.aftasapi.Requests;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,17 +15,22 @@ import java.sql.Time;
 @NoArgsConstructor
 @Builder
 public class CompetitionRequest {
-    @NotNull
+    @NotNull(message = "not null")
+
     private Date date ;
-    @NotNull
+    @NotNull(message = "not null")
+
     private Time startTime ;
-    @NotNull
+    @NotNull(message = "not null")
+
     private Time endtTime ;
-    @NotNull
+    @NotNull(message = "not null")
+
     private int numberOfParticipants ;
-    @NotNull
-    @NotBlank
+    @NotNull(message = "not null")
+    @Min(value = 3,message = "location must be more than 3 characters")
+    @NotBlank(message = "location must be not blank")
     private String location ;
-    @NotNull
+    @NotNull(message = "not null")
     private float amount ;
 }
