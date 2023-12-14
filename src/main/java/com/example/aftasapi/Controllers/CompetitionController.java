@@ -1,7 +1,7 @@
 package com.example.aftasapi.Controllers;
 
 import com.example.aftasapi.DTOs.CompetitionDTO;
-import com.example.aftasapi.Interfaces.IBaseController;
+import com.example.aftasapi.BaseInterfaces.IBaseController;
 import com.example.aftasapi.Requests.CompetitionRequest;
 import com.example.aftasapi.Services.ICompetitionService;
 import jakarta.validation.Valid;

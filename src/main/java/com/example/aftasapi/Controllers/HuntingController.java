@@ -1,12 +1,8 @@
 package com.example.aftasapi.Controllers;
 
-import com.example.aftasapi.DTOs.CompetitionDTO;
 import com.example.aftasapi.DTOs.HuntingDTO;
-import com.example.aftasapi.Errors.ErrorMessageHunting;
-import com.example.aftasapi.Exceptions.HuntingException;
 import com.example.aftasapi.Helpers.NumberValidator;
-import com.example.aftasapi.Interfaces.IBaseController;
-import com.example.aftasapi.Requests.CompetitionRequest;
+import com.example.aftasapi.BaseInterfaces.IBaseController;
 import com.example.aftasapi.Requests.HuntingRequest;
 import com.example.aftasapi.Services.IHuntingService;
 import jakarta.validation.Valid;
@@ -14,10 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,9 +26,10 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
     public HuntingController(NumberValidator numberValidator,
                              ModelMapper modelMapper,
                              IHuntingService huntingService) {
-        this.numberValidator = numberValidator;
-         this.modelMapper = modelMapper;
-         this.huntingService = huntingService;
+
+            this.numberValidator = numberValidator;
+            this.modelMapper = modelMapper;
+            this.huntingService = huntingService;
      }
 
 
@@ -43,28 +37,32 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
     @Override
     @PostMapping
     public ResponseEntity<HuntingDTO> create(@Valid @RequestBody HuntingRequest huntingRequest) {
-        HuntingDTO huntingDTO = huntingService.create(modelMapper.map(huntingRequest,HuntingDTO.class));
+        HuntingDTO huntingDTO = huntingService.createHunting(huntingRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(huntingDTO);
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<HuntingDTO>> getAll() {
          List<HuntingDTO> huntingList  = huntingService.findAll();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(huntingList);
     }
 
     @Override
-    public ResponseEntity<HuntingDTO> getById(long id) {
+    @GetMapping("{huntingId}")
+    public ResponseEntity<HuntingDTO> getById(@PathVariable long huntingId) {
         return null;
     }
 
     @Override
-    public ResponseEntity<HuntingDTO> update(long id, HuntingRequest request) {
+    @PutMapping("{huntingId}")
+    public ResponseEntity<HuntingDTO> update(@PathVariable long huntingId,@Valid @RequestBody  HuntingRequest huntingRequest) {
         return null;
     }
 
     @Override
-    public ResponseEntity<?> delete(long id) {
+    @DeleteMapping("{huntingId}")
+    public ResponseEntity<?> delete(@PathVariable long huntingId) {
         return null;
     }
 }

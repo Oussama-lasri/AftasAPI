@@ -7,7 +7,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "levels")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LevelEntity {
@@ -20,7 +21,7 @@ public class LevelEntity {
     @Column(nullable = false)
     private int points ;
 
-    @OneToMany(mappedBy = "level", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "level", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<FishEntity> fiches ;
 
 

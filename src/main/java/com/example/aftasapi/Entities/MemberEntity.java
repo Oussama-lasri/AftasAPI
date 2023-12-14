@@ -2,9 +2,7 @@ package com.example.aftasapi.Entities;
 
 import com.example.aftasapi.Enums.IdentityDocumentType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
@@ -13,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "members")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberEntity {
@@ -41,7 +40,7 @@ public class MemberEntity {
     @Column(nullable = false)
     private String identityNumber ;
 
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     private List<HuntingEntity> huntingList ;
 
 //    @ManyToMany
@@ -50,7 +49,7 @@ public class MemberEntity {
 //            inverseJoinColumns = @JoinColumn(name = "competitions_id"))
 //    private List<CompetitionEntity> competitions ;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member" , fetch = FetchType.LAZY)
     private List<RankingEntity> rankingList ;
 
 

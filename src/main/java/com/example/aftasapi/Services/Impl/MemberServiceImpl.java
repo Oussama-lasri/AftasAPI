@@ -42,9 +42,11 @@ public class MemberServiceImpl implements IMemberService {
     }
 
     @Override
-    public MemberDTO findMemberById(long id) {
+    public MemberDTO findById(long id) {
         return null;
     }
+
+
 
     @Override
     public void delete(long id) {

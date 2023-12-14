@@ -1,7 +1,7 @@
 package com.example.aftasapi.Controllers;
 
 import com.example.aftasapi.DTOs.RankingDTO;
-import com.example.aftasapi.Interfaces.IBaseController;
+import com.example.aftasapi.BaseInterfaces.IBaseController;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

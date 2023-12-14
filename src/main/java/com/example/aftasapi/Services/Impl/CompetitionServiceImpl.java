@@ -2,6 +2,8 @@ package com.example.aftasapi.Services.Impl;
 
 import com.example.aftasapi.DTOs.CompetitionDTO;
 import com.example.aftasapi.Entities.CompetitionEntity;
+import com.example.aftasapi.Errors.ErrorMessageGeneral;
+import com.example.aftasapi.Exceptions.CompetitionException;
 import com.example.aftasapi.Helpers.GenerateCode;
 import com.example.aftasapi.Repositories.CompetitionRepository;
 import com.example.aftasapi.Services.ICompetitionService;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,11 +31,13 @@ public class CompetitionServiceImpl implements ICompetitionService {
 
     @Override
     public CompetitionDTO create(CompetitionDTO competitionDTO) {
-
+        Optional<CompetitionEntity> competitionCheck = competitionRepository.findByDate(competitionDTO.getDate());
+        if (competitionCheck.isPresent()){
+            throw  new CompetitionException(ErrorMessageGeneral.RECORD_ALREADY_EXISTS.getErrorMessage());
+        }
 
         CompetitionEntity competition = modelMapper.map(competitionDTO, CompetitionEntity.class);
         competition.setCode(generateCode.codeCompetition(competitionDTO));
-
 
         CompetitionEntity competitionCreated;
         try {
@@ -49,17 +54,17 @@ public class CompetitionServiceImpl implements ICompetitionService {
     }
 
     @Override
-    public CompetitionDTO upadte(long competition_id, CompetitionDTO competitionDTO) {
+    public CompetitionDTO update(long competition_id, CompetitionDTO competitionDTO) {
         return null;
     }
 
     @Override
-    public CompetitionDTO findCompetitionById(long id) {
+    public CompetitionDTO findById(long id) {
         return null;
     }
 
     @Override
-    public void delete(CompetitionDTO competitionDTO) {
+    public void delete(long competition_id) {
 
     }
 

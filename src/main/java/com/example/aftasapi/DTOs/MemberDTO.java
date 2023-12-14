@@ -4,14 +4,13 @@ import com.example.aftasapi.Entities.HuntingEntity;
 import com.example.aftasapi.Entities.RankingEntity;
 import com.example.aftasapi.Enums.IdentityDocumentType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.util.List;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDTO {

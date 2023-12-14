@@ -1,15 +1,14 @@
 package com.example.aftasapi.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "fishes")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class FishEntity {
@@ -25,6 +24,6 @@ public class FishEntity {
     private LevelEntity level ;
 
     // liaison between object fish in HuntingEntity for map
-    @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "fish", fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
     private List<HuntingEntity> huntingList ;
 }

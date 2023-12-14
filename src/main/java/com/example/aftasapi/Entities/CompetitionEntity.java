@@ -1,9 +1,7 @@
 package com.example.aftasapi.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -11,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name="competitions")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -37,14 +36,14 @@ public class CompetitionEntity {
     @Column(nullable = false)
     private float amount ;
 
-    @OneToMany(mappedBy = "competition", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "competition",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private List<HuntingEntity> huntingList ;
 
 
 //    @ManyToMany(mappedBy = "competitions")
 //    private List<MemberEntity> memebers ;
 
-    @OneToMany(mappedBy = "competition")
+    @OneToMany(mappedBy = "competition",fetch = FetchType.LAZY)
     private List<RankingEntity> rankingList ;
 
 

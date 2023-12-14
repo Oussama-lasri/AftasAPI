@@ -3,13 +3,11 @@ package com.example.aftasapi.DTOs;
 import com.example.aftasapi.Entities.HuntingEntity;
 import com.example.aftasapi.Entities.LevelEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

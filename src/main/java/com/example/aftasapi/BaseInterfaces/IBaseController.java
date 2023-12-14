@@ -1,4 +1,4 @@
-package com.example.aftasapi.Interfaces;
+package com.example.aftasapi.BaseInterfaces;
 
 import org.springframework.http.ResponseEntity;
 
