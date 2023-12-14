@@ -2,6 +2,7 @@ package com.example.aftasapi.DTOs;
 
 import com.example.aftasapi.Entities.HuntingEntity;
 import com.example.aftasapi.Entities.RankingEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
@@ -28,6 +29,8 @@ public class CompetitionDTO {
     private int numberOfParticipants ;
     private String location ;
     private float amount ;
+    @JsonManagedReference
     private List<HuntingDTO> huntingList ;
+    @JsonManagedReference
     private List<RankingDTO> rankingList ;
 }

@@ -1,5 +1,6 @@
 package com.example.aftasapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,6 +38,7 @@ public class CompetitionEntity {
     private float amount ;
 
     @OneToMany(mappedBy = "competition",fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<HuntingEntity> huntingList ;
 
 
@@ -44,6 +46,7 @@ public class CompetitionEntity {
 //    private List<MemberEntity> memebers ;
 
     @OneToMany(mappedBy = "competition",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<RankingEntity> rankingList ;
 
 

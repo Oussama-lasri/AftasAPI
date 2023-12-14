@@ -1,5 +1,6 @@
 package com.example.aftasapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +23,11 @@ public class RankingEntity {
 
     @ManyToOne
     @JoinColumn(name = "members_id")
+    @JsonManagedReference
     private MemberEntity member;
 
     @ManyToOne
     @JoinColumn(name = "competitions_id")
+    @JsonManagedReference
     private  CompetitionEntity competition;
 }

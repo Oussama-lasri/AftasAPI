@@ -1,4 +1,4 @@
-package com.example.aftasapi.Requests;
+package com.example.aftasapi.DTOs.Requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

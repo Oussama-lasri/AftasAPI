@@ -1,6 +1,7 @@
 package com.example.aftasapi.DTOs;
 
 import com.example.aftasapi.Entities.FishEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,6 @@ public class LevelDTO {
     private String description ;
 
     private int points ;
-
+    @JsonManagedReference
     private List<FishDTO> fiches ;
 }

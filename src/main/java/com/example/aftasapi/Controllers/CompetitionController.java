@@ -34,13 +34,15 @@ public class CompetitionController implements IBaseController<CompetitionDTO, Co
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<CompetitionDTO>> getAll() {
         List<CompetitionDTO> competitions = competitionService.findAll();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(competitions);
     }
 
     @Override
-    public ResponseEntity<CompetitionDTO> getById(long id) {
+    @GetMapping("/{competition_id}")
+    public ResponseEntity<CompetitionDTO> getById(@PathVariable long competition_id) {
         return null;
     }
 

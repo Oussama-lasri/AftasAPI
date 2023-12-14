@@ -1,6 +1,7 @@
 package com.example.aftasapi.Entities;
 
 import com.example.aftasapi.Enums.IdentityDocumentType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,6 +42,7 @@ public class MemberEntity {
     private String identityNumber ;
 
     @OneToMany(mappedBy = "member",fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<HuntingEntity> huntingList ;
 
 //    @ManyToMany
@@ -50,6 +52,7 @@ public class MemberEntity {
 //    private List<CompetitionEntity> competitions ;
 
     @OneToMany(mappedBy = "member" , fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<RankingEntity> rankingList ;
 
 

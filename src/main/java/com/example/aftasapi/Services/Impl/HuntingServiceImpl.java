@@ -1,6 +1,9 @@
 package com.example.aftasapi.Services.Impl;
 
+import com.example.aftasapi.DTOs.CompetitionDTO;
+import com.example.aftasapi.DTOs.FishDTO;
 import com.example.aftasapi.DTOs.HuntingDTO;
+import com.example.aftasapi.DTOs.MemberDTO;
 import com.example.aftasapi.Entities.CompetitionEntity;
 import com.example.aftasapi.Entities.FishEntity;
 import com.example.aftasapi.Entities.HuntingEntity;
@@ -16,6 +19,7 @@ import com.example.aftasapi.Services.IHuntingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +42,10 @@ public class HuntingServiceImpl implements IHuntingService {
     this.modelMapper = modelMapper;
 }
     @Override
+
     public HuntingDTO createHunting(HuntingRequest huntingRequest)  {
         CompetitionEntity competition = competitionRepository.findByCode(huntingRequest.getCompetition_code())
-                .orElseThrow(()-> new HuntingException(ErrorMessageHunting.NO_MEMBER_FOUND.getErrorMessage()));
+                .orElseThrow(()-> new HuntingException(ErrorMessageHunting.NO_COMPETITION_FOUND.getErrorMessage()));
 
 
         FishEntity fish = fishRepository.findById(huntingRequest.getFish_id())
@@ -54,8 +59,9 @@ public class HuntingServiceImpl implements IHuntingService {
 //        if (member.isEmpty()){
 //            throw new HuntingException(ErrorMessageHunting.NO_MEMBER_FOUND.getErrorMessage());
 //        }
-        HuntingEntity huntingCheck = huntingRepository.findByCompetitionAndMember(competition,member).
-                orElseThrow(()->new HuntingException("exist"));
+        huntingRepository.findByCompetitionAndMember(competition,member).ifPresent(huntingEntity -> {
+            throw new HuntingException(ErrorMessageHunting.RECORD_ALREADY_EXISTS.getErrorMessage());
+        });
 
 
         HuntingEntity hunting = HuntingEntity.builder()
@@ -70,7 +76,14 @@ public class HuntingServiceImpl implements IHuntingService {
         }catch(Exception ex){
             throw new HuntingException(ex.getMessage());
         }
-        return modelMapper.map(huntingCreated,HuntingDTO.class);
+        HuntingDTO huntingDTO = HuntingDTO.builder()
+                .id(huntingCreated.getId())
+                .numberOfFish(huntingCreated.getNumberOfFish())
+                .member(modelMapper.map(huntingCreated.getMember(), MemberDTO.class))
+                .fish(modelMapper.map(huntingCreated.getFish(), FishDTO.class))
+                .competition(modelMapper.map(huntingCreated.getCompetition(), CompetitionDTO.class))
+                .build();
+        return huntingDTO;
     }
 
     @Override

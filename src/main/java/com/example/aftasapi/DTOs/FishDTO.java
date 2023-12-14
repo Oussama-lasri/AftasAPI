@@ -2,6 +2,8 @@ package com.example.aftasapi.DTOs;
 
 import com.example.aftasapi.Entities.HuntingEntity;
 import com.example.aftasapi.Entities.LevelEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +20,8 @@ public class FishDTO {
     private String name ;
 
     private double averageWeight ;
-
+    @JsonBackReference
     private LevelDTO level ;
-
+    @JsonManagedReference
     private List<HuntingDTO> huntingList ;
 }

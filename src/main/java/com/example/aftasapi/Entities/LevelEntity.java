@@ -1,5 +1,6 @@
 package com.example.aftasapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class LevelEntity {
     private int points ;
 
     @OneToMany(mappedBy = "level", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<FishEntity> fiches ;
 
 

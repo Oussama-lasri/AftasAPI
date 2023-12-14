@@ -25,7 +25,7 @@
 //
 //    @PostMapping
 //    public ResponseEntity<RankingDTO> create(@RequestBody RankingRequest  rankingRequest){
-//        RankingDTO rankingDTO = rankingService.create(modelMapper.map(rankingRequest,RankingDTO.class));
+//        RankingDTO rankingDTO = rankingService.create(rankingRequest,RankingDTO.class));
 //        return ResponseEntity.status(HttpStatus.CREATED).body(rankingDTO);
 //    }
 //

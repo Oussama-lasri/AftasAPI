@@ -1,5 +1,6 @@
 package com.example.aftasapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,10 +28,12 @@ public class HuntingEntity {
 
     @ManyToOne
     @JoinColumn(name = "competitions_id")
+    @JsonManagedReference
     private CompetitionEntity competition ;
 
     @ManyToOne
     @JoinColumn(name = "members_id")
+    @JsonManagedReference
     private MemberEntity member ;
 
 }
