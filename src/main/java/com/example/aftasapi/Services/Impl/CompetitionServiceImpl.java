@@ -33,7 +33,7 @@ public class CompetitionServiceImpl implements ICompetitionService {
     public CompetitionDTO create(CompetitionDTO competitionDTO) {
         Optional<CompetitionEntity> competitionCheck = competitionRepository.findByDate(competitionDTO.getDate());
         if (competitionCheck.isPresent()){
-            throw  new CompetitionException(ErrorMessageGeneral.RECORD_ALREADY_EXISTS.getErrorMessage());
+            throw  new CompetitionException(ErrorMessageGeneral.RECORD_ALREADY_EXISTS.getErrorMessage()+"with this date : "+competitionCheck.get().getDate());
         }
 
         CompetitionEntity competition = modelMapper.map(competitionDTO, CompetitionEntity.class);
@@ -74,5 +74,8 @@ public class CompetitionServiceImpl implements ICompetitionService {
         List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
         return competitionDTOList;
     }
+
+
+
 }
 

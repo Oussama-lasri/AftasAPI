@@ -2,6 +2,7 @@ package com.example.aftasapi.DTOs.Requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +35,6 @@ public class CompetitionRequest {
     private String location ;
 
     @NotNull(message = "not null")
+    @Positive
     private float amount ;
 }

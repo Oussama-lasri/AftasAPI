@@ -22,7 +22,7 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
     private final ModelMapper modelMapper;
 
     private final IHuntingService huntingService ;
-     @Autowired
+    @Autowired
     public HuntingController(NumberValidator numberValidator,
                              ModelMapper modelMapper,
                              IHuntingService huntingService) {
@@ -37,8 +37,8 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
     @Override
     @PostMapping
     public ResponseEntity<HuntingDTO> create(@Valid @RequestBody HuntingRequest huntingRequest) {
-        HuntingDTO huntingDTO = huntingService.createHunting(huntingRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(huntingDTO);
+        //HuntingDTO huntingDTO = huntingService.createHunting(huntingRequest);
+        return huntingService.createHunting(huntingRequest);
     }
 
     @Override

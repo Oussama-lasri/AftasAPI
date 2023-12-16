@@ -18,6 +18,8 @@ import com.example.aftasapi.Requests.HuntingRequest;
 import com.example.aftasapi.Services.IHuntingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,17 +35,17 @@ public class HuntingServiceImpl implements IHuntingService {
     private  final MemberRepository memberRepository ;
     private final ModelMapper modelMapper ;
 
-@Autowired
+    @Autowired
     public HuntingServiceImpl(HuntingRepository huntingRepository, CompetitionRepository competitionRepository, FishRepository fishRepository, MemberRepository memberRepository, ModelMapper modelMapper) {
         this.huntingRepository = huntingRepository;
         this.competitionRepository = competitionRepository;
-    this.fishRepository = fishRepository;
-    this.memberRepository = memberRepository;
-    this.modelMapper = modelMapper;
+        this.fishRepository = fishRepository;
+        this.memberRepository = memberRepository;
+        this.modelMapper = modelMapper;
 }
-    @Override
 
-    public HuntingDTO createHunting(HuntingRequest huntingRequest)  {
+    @Override
+    public ResponseEntity<HuntingDTO> createHunting(HuntingRequest huntingRequest)  {
         CompetitionEntity competition = competitionRepository.findByCode(huntingRequest.getCompetition_code())
                 .orElseThrow(()-> new HuntingException(ErrorMessageHunting.NO_COMPETITION_FOUND.getErrorMessage()));
 
@@ -59,31 +61,37 @@ public class HuntingServiceImpl implements IHuntingService {
 //        if (member.isEmpty()){
 //            throw new HuntingException(ErrorMessageHunting.NO_MEMBER_FOUND.getErrorMessage());
 //        }
-        huntingRepository.findByCompetitionAndMember(competition,member).ifPresent(huntingEntity -> {
-            throw new HuntingException(ErrorMessageHunting.RECORD_ALREADY_EXISTS.getErrorMessage());
-        });
-
-
+//        huntingRepository.findByCompetitionAndMemberAndFish(competition,member,fish).ifPresent(huntingEntity -> {
+//
+//            throw new HuntingException(ErrorMessageHunting.RECORD_ALREADY_EXISTS.getErrorMessage());
+//        });
         HuntingEntity hunting = HuntingEntity.builder()
                 .competition(competition)
                 .fish(fish)
                 .member(member)
                 .numberOfFish(huntingRequest.getNumberOfFish())
                 .build();
-        HuntingEntity huntingCreated ;
-        try{
-            huntingCreated = huntingRepository.save(hunting);
-        }catch(Exception ex){
-            throw new HuntingException(ex.getMessage());
+
+        List<HuntingEntity> huntingCheck = huntingRepository.findByCompetitionAndMemberAndFishSingleResult(competition,member,fish) ;
+
+        if (huntingCheck.size() == 1){
+            System.out.println("update");
+            HuntingEntity huntingExist = huntingCheck.get(0);
+            huntingExist.setNumberOfFish(huntingCheck.get(0).getNumberOfFish()+hunting.getNumberOfFish());
+            HuntingEntity huntingUpdated = huntingRepository.save(huntingExist);
+            HuntingDTO huntingDTO = mapHuntingEntityToDTO(huntingUpdated);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(huntingDTO);
+        }else {
+            System.out.println("create");
+            HuntingEntity huntingCreated;
+            try {
+                huntingCreated = huntingRepository.save(hunting);
+            } catch (Exception ex) {
+                throw new HuntingException(ex.getMessage());
+            }
+            HuntingDTO huntingDTO = mapHuntingEntityToDTO(huntingCreated);
+            return ResponseEntity.status(HttpStatus.CREATED).body(huntingDTO);
         }
-        HuntingDTO huntingDTO = HuntingDTO.builder()
-                .id(huntingCreated.getId())
-                .numberOfFish(huntingCreated.getNumberOfFish())
-                .member(modelMapper.map(huntingCreated.getMember(), MemberDTO.class))
-                .fish(modelMapper.map(huntingCreated.getFish(), FishDTO.class))
-                .competition(modelMapper.map(huntingCreated.getCompetition(), CompetitionDTO.class))
-                .build();
-        return huntingDTO;
     }
 
     @Override
@@ -111,6 +119,17 @@ public class HuntingServiceImpl implements IHuntingService {
 
 
         return null;
+    }
+
+
+    private HuntingDTO mapHuntingEntityToDTO(HuntingEntity huntingEntity) {
+        return HuntingDTO.builder()
+                .id(huntingEntity.getId())
+                .numberOfFish(huntingEntity.getNumberOfFish())
+                .member(modelMapper.map(huntingEntity.getMember(), MemberDTO.class))
+                .fish(modelMapper.map(huntingEntity.getFish(), FishDTO.class))
+                .competition(modelMapper.map(huntingEntity.getCompetition(), CompetitionDTO.class))
+                .build();
     }
 
 }

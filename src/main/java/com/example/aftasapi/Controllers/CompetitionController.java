@@ -55,4 +55,14 @@ public class CompetitionController implements IBaseController<CompetitionDTO, Co
     public ResponseEntity<?> delete(long id) {
         return null;
     }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<List<CompetitionDTO>> allCompetitionWithPagination(
+            @RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) int pageNumber,
+            @RequestParam(value = "pageSize" , defaultValue = "10" , required = false) int pageSize)
+    {
+
+
+        return null ;
+    }
 }
