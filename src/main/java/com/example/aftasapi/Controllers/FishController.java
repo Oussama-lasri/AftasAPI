@@ -4,12 +4,14 @@ import com.example.aftasapi.BaseInterfaces.IBaseController;
 import com.example.aftasapi.DTOs.FishDTO;
 import com.example.aftasapi.Requests.FishRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 @RestController
 @RequestMapping("/api/v1/fishes")
+@CrossOrigin
 public class FishController implements IBaseController<FishDTO,FishRequest> {
     @Override
     public ResponseEntity<FishDTO> create(FishRequest request) {

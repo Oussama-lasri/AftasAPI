@@ -1,6 +1,7 @@
 package com.example.aftasapi.Services.Impl;
 
 import com.example.aftasapi.DTOs.CompetitionDTO;
+import com.example.aftasapi.DTOs.Response.CompetitionResponse;
 import com.example.aftasapi.Entities.CompetitionEntity;
 import com.example.aftasapi.Errors.ErrorMessageGeneral;
 import com.example.aftasapi.Exceptions.CompetitionException;
@@ -9,6 +10,9 @@ import com.example.aftasapi.Repositories.CompetitionRepository;
 import com.example.aftasapi.Services.ICompetitionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,7 +78,21 @@ public class CompetitionServiceImpl implements ICompetitionService {
         List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
         return competitionDTOList;
     }
-
+    @Override
+    public CompetitionResponse allCompetitionWithPagination(int pageNumber , int pageSize) {
+        Pageable pageable =  PageRequest.of(pageNumber,pageSize);
+        Page<CompetitionEntity> competitions = competitionRepository.findAll(pageable);
+        List<CompetitionDTO> competitionDTOList = competitions.getContent().stream().map(competition -> modelMapper.map(competition, CompetitionDTO.class)).collect(Collectors.toList());
+        CompetitionResponse competitionResponse = CompetitionResponse.builder()
+                .competitions(competitionDTOList)
+                .pageSize(competitions.getSize())
+                .totalPage(competitions.getTotalPages())
+                .totalElement(competitions.getTotalElements())
+                .last(competitions.isLast())
+                .pageNumber(competitions.getNumber())
+                .build();
+        return competitionResponse;
+    }
 
 
 }

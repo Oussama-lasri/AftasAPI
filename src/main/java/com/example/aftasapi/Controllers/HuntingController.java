@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/huntings")
+@CrossOrigin
 public class HuntingController implements IBaseController<HuntingDTO,HuntingRequest>  {
 
     private final NumberValidator numberValidator ;
