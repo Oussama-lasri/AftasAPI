@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/huntings")
+@RequestMapping("/api/v1/")
 @CrossOrigin
 public class HuntingController implements IBaseController<HuntingDTO,HuntingRequest>  {
 
@@ -35,12 +35,14 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
 
 
 
-    @Override
-    @PostMapping
-    public ResponseEntity<HuntingDTO> create(@Valid @RequestBody HuntingRequest huntingRequest) {
+
+    @PostMapping("/competitions/{competition_code}/hunting")
+    public ResponseEntity<HuntingDTO> createHunting(@PathVariable String competition_code ,@Valid @RequestBody HuntingRequest huntingRequest ) {
         //HuntingDTO huntingDTO = huntingService.createHunting(huntingRequest);
-        return huntingService.createHunting(huntingRequest);
+        return huntingService.createHunting(huntingRequest,competition_code);
     }
+
+
 
     @Override
     @GetMapping
@@ -64,6 +66,11 @@ public class HuntingController implements IBaseController<HuntingDTO,HuntingRequ
     @Override
     @DeleteMapping("{huntingId}")
     public ResponseEntity<?> delete(@PathVariable long huntingId) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<HuntingDTO> create(HuntingRequest request) {
         return null;
     }
 }

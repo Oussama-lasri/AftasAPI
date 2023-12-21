@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -55,6 +56,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public List<MemberDTO> findAll() {
-        return null;
+        List<MemberEntity> listMember = memberRepository.findAll();
+        return listMember.stream().map(member -> modelMapper.map(member,MemberDTO.class)).collect(Collectors.toList());
     }
 }

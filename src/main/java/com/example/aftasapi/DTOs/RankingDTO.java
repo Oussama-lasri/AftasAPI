@@ -16,7 +16,6 @@ public class RankingDTO {
     private Long id;
     private int rank ;
     private int score ;
-    @JsonBackReference
     private MemberDTO member;
     @JsonBackReference
     private CompetitionDTO competition;

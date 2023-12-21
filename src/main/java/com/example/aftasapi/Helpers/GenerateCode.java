@@ -13,7 +13,7 @@ public class GenerateCode {
 
         if(competitionDTO.getLocation() != null) {
             String cleanedLocation = competitionDTO.getLocation().replaceAll("\\s", "");
-            return cleanedLocation + ":" + cleanedLocation.substring(0, 3) + "-" + competitionDTO.getDate();
+            return cleanedLocation.substring(0, 3) + "-" + competitionDTO.getDate();
         }
         return null ;
     }

@@ -29,15 +29,13 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<MemberDTO> createMember(@Valid @RequestBody MemberRequest memberRequest){
-        if (    memberRequest.getName().isEmpty()
-                || memberRequest.getFamilyName().isEmpty()
-                || memberRequest.getIdentityNumber().isEmpty()
-                || memberRequest.getIdentityDocument() == null
-                || memberRequest.getAccessionDate() == null ){
-            throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
-        }
-
-
+//        if (    memberRequest.getName().isEmpty()
+//                || memberRequest.getFamilyName().isEmpty()
+//                || memberRequest.getIdentityNumber().isEmpty()
+//                || memberRequest.getIdentityDocument() == null
+//                || memberRequest.getAccessionDate() == null ){
+//            throw new MemberException(ErrorMessageMember.MISSING_REQUIRED_FIELD.getErrorMessage());
+//        }
 
         MemberDTO memberDTO = memberService.create(modelMapper.map(memberRequest,MemberDTO.class));
         return ResponseEntity.status(HttpStatus.CREATED).body(memberDTO);

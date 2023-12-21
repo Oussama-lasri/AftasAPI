@@ -13,10 +13,10 @@ import com.example.aftasapi.Repositories.RankingRepository;
 import com.example.aftasapi.Services.IPodiumService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PodiumServiceImpl implements IPodiumService {
@@ -43,18 +43,18 @@ public class PodiumServiceImpl implements IPodiumService {
        // List<CompetitionEntity> competitionEntityList = competitionRepository.findAll();
         CompetitionEntity competition = competitionRepository.findByCode(code).orElseThrow(
                 () -> new CompetitionException(ErrorMessageHunting.NO_COMPETITION_FOUND.getErrorMessage()));
-        List<RankingDTO> rankingDTOList = competition.getRankingList().stream()
+        List<RankingDTO> rankingDTOList = new ArrayList<>(competition.getRankingList().stream()
                 .map(ranking -> {
-                        ranking.setScore(0);
-                        // find all hunting of members in specific competition
-                        List<HuntingEntity> huntingListIncludeInCompetition = huntingRepository.findAllByCompetitionAndMember(ranking.getCompetition(),ranking.getMember());
-                        huntingListIncludeInCompetition.forEach((hunting ->{
-                         ranking.setScore(ranking.getScore()+(hunting.getNumberOfFish() * hunting.getFish().getLevel().getPoints()));
+                    ranking.setScore(0);
+                    // find all hunting of members in specific competition
+                    List<HuntingEntity> huntingListIncludeInCompetition = huntingRepository.findAllByCompetitionAndMember(ranking.getCompetition(), ranking.getMember());
+                    huntingListIncludeInCompetition.forEach((hunting -> {
+                        ranking.setScore(ranking.getScore() + (hunting.getNumberOfFish() * hunting.getFish().getLevel().getPoints()));
                     }));
-                   RankingEntity rankingUpdated = rankingRepository.save(ranking);
-                   return modelMapper.map(rankingUpdated,RankingDTO.class);
+                    RankingEntity rankingUpdated = rankingRepository.save(ranking);
+                    return modelMapper.map(rankingUpdated, RankingDTO.class);
                 })
-                .toList();
+                .toList());
 //        List<CompetitionDTO> competitionDTOList = competitionEntityList.stream().map(competition -> {
 //            CompetitionDTO competitionDTO = modelMapper.map(competition,CompetitionDTO.class);
 //            List<RankingDTO> rankingDTOList = competition.getRankingList().stream().map(rankingEntity -> {
@@ -63,6 +63,14 @@ public class PodiumServiceImpl implements IPodiumService {
 //            competitionDTO.setRankingList(rankingDTOList);
 //            return competitionDTO;
 //        }).toList();
+        rankingDTOList.sort(Comparator.comparingInt(RankingDTO::getScore).reversed());
         return rankingDTOList;
+
+    }
+    public List<RankingDTO> generateRanking(String code){
+        CompetitionEntity competition = competitionRepository.findByCode(code).orElseThrow(
+                () -> new CompetitionException(ErrorMessageHunting.NO_COMPETITION_FOUND.getErrorMessage()));
+        Sort sort = Sort.by(Sort.Direction.ASC, "score");
+        return null  ;
     }
 }

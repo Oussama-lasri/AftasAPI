@@ -25,11 +25,15 @@ public class RankingController {
          this.rankingService = rankingService ;
          this.modelMapper = modelMapper;
      }
+    @GetMapping("competitions/{code}/members")
+    public ResponseEntity<List<RankingDTO>> getRankingsCompetition(@PathVariable String code){
+        List<RankingDTO> rankings = rankingService.getRankings(code);
+        return ResponseEntity.status(HttpStatus.CREATED).body(rankings);
+    }
 
-
-    @PostMapping("/addToCompetition")
-    public ResponseEntity<RankingDTO> create(@RequestBody RankingRequest rankingRequest){
-        RankingDTO rankingDTO = rankingService.createRanking(rankingRequest);
+    @PostMapping("competitions/{code}/members")
+    public ResponseEntity<RankingDTO> create(@PathVariable String code,@RequestBody RankingRequest rankingRequest){
+        RankingDTO rankingDTO = rankingService.createRanking(rankingRequest,code);
         return ResponseEntity.status(HttpStatus.CREATED).body(rankingDTO);
     }
 

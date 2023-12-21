@@ -45,8 +45,8 @@ public class HuntingServiceImpl implements IHuntingService {
 }
 
     @Override
-    public ResponseEntity<HuntingDTO> createHunting(HuntingRequest huntingRequest)  {
-        CompetitionEntity competition = competitionRepository.findByCode(huntingRequest.getCompetition_code())
+    public ResponseEntity<HuntingDTO> createHunting(HuntingRequest huntingRequest,String code)  {
+        CompetitionEntity competition = competitionRepository.findByCode(code)
                 .orElseThrow(()-> new HuntingException(ErrorMessageHunting.NO_COMPETITION_FOUND.getErrorMessage()));
 
 

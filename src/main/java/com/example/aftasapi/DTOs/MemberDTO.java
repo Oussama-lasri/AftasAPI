@@ -3,6 +3,8 @@ package com.example.aftasapi.DTOs;
 import com.example.aftasapi.Entities.HuntingEntity;
 import com.example.aftasapi.Entities.RankingEntity;
 import com.example.aftasapi.Enums.IdentityDocumentType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,8 +28,11 @@ public class MemberDTO {
     private IdentityDocumentType identityDocument ;
 
     private String identityNumber ;
-    @JsonManagedReference
-    private List<HuntingDTO> huntingList ;
-    @JsonManagedReference
-    private List<RankingDTO> rankingList ;
+//    @JsonManagedReference
+//    private List<HuntingDTO> huntingList ;
+//    @JsonManagedReference
+//    private List<RankingDTO> rankingList ;
+
+
+
 }

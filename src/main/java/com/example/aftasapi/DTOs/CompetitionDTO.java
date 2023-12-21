@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -29,6 +30,7 @@ public class CompetitionDTO {
     private int numberOfParticipants ;
     private String location ;
     private float amount ;
+    //private int etat ;
     @JsonManagedReference
     private List<HuntingDTO> huntingList ;
     @JsonManagedReference

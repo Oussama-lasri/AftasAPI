@@ -18,6 +18,6 @@ public class LevelDTO {
     private String description ;
 
     private int points ;
-    @JsonManagedReference
-    private List<FishDTO> fiches ;
+//    @JsonManagedReference
+//    private List<FishDTO> fiches ;
 }

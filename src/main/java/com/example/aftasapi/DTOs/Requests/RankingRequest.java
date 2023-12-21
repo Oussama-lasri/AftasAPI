@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RankingRequest {
 
-    @Positive(message = "Rank must be a positive number")
-    private int rank;
-    @Positive(message = "Score must be a positive number")
-    private int score;
+//    @Positive(message = "Rank must be a positive number")
+//    private int rank;
+//    @Positive(message = "Score must be a positive number")
+//    private int score;
     @Positive(message = "Member ID must be a positive number")
     private long memberId;
-    @NotBlank(message = "Competition ID must be not null")
-    private String competitionId;
+//    @NotBlank(message = "Competition ID must be not null")
+//    private String competitionId;
 }
 
 

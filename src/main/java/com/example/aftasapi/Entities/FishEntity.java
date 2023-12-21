@@ -22,11 +22,10 @@ public class FishEntity {
     private double averageWeight ;
     @ManyToOne
     @JoinColumn(name = "levels_id")
-    @JsonManagedReference
+
     private LevelEntity level ;
 
     // liaison between object fish in HuntingEntity for map
     @OneToMany(mappedBy = "fish", fetch = FetchType.LAZY ,cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<HuntingEntity> huntingList ;
 }

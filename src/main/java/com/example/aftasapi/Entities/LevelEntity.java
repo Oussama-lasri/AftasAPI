@@ -23,7 +23,7 @@ public class LevelEntity {
     private int points ;
 
     @OneToMany(mappedBy = "level", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    @JsonManagedReference
+
     private List<FishEntity> fiches ;
 
 

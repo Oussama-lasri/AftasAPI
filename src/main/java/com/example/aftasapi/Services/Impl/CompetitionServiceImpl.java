@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +41,10 @@ public class CompetitionServiceImpl implements ICompetitionService {
             throw  new CompetitionException(ErrorMessageGeneral.RECORD_ALREADY_EXISTS.getErrorMessage()+"with this date : "+competitionCheck.get().getDate());
         }
 
+        if (competitionDTO.getDate().before(new Date())){
+            throw new CompetitionException("Invalid competition date. Please enter a date in the future.");
+        }
+
         CompetitionEntity competition = modelMapper.map(competitionDTO, CompetitionEntity.class);
         competition.setCode(generateCode.codeCompetition(competitionDTO));
 
@@ -62,9 +67,11 @@ public class CompetitionServiceImpl implements ICompetitionService {
         return null;
     }
 
-    @Override
-    public CompetitionDTO findById(long id) {
-        return null;
+    public CompetitionDTO findByCode(String code) {
+        CompetitionEntity competition = competitionRepository.findByCode(code).orElseThrow(()->
+                new CompetitionException("competitions not found")
+        );
+        return modelMapper.map(competition,CompetitionDTO.class);
     }
 
     @Override
@@ -94,6 +101,9 @@ public class CompetitionServiceImpl implements ICompetitionService {
         return competitionResponse;
     }
 
-
+    @Override
+    public CompetitionDTO findById(long code) {
+        return null;
+    }
 }
 

@@ -12,6 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class RankingEntity {
+
+    // use EmbeddedId
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,11 +26,9 @@ public class RankingEntity {
 
     @ManyToOne
     @JoinColumn(name = "members_id")
-    @JsonManagedReference
     private MemberEntity member;
 
     @ManyToOne
     @JoinColumn(name = "competitions_id")
-    @JsonManagedReference
     private  CompetitionEntity competition;
 }

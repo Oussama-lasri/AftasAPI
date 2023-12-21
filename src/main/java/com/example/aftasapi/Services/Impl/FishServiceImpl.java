@@ -1,12 +1,23 @@
 package com.example.aftasapi.Services.Impl;
 
 import com.example.aftasapi.DTOs.FishDTO;
+import com.example.aftasapi.Entities.FishEntity;
+import com.example.aftasapi.Repositories.FishRepository;
 import com.example.aftasapi.Services.IFishService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class FishServiceImpl implements IFishService {
+
+    private final FishRepository fishRepository ;
+    private final ModelMapper modelMapper ;
+    public FishServiceImpl(FishRepository fishRepository, ModelMapper modelMapper) {
+        this.fishRepository = fishRepository;
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public FishDTO create(FishDTO fishDTO) {
         return null;
@@ -29,6 +40,7 @@ public class FishServiceImpl implements IFishService {
 
     @Override
     public List<FishDTO> findAll() {
-        return null;
+        List<FishEntity> fishes = fishRepository.findAll();
+        return fishes.stream().map(fish -> modelMapper.map(fish,FishDTO.class)).toList();
     }
 }

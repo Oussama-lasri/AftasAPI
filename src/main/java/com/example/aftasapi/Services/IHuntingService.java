@@ -6,6 +6,6 @@ import com.example.aftasapi.Requests.HuntingRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface IHuntingService extends IBaseService<HuntingDTO> {
-    public ResponseEntity<HuntingDTO> createHunting(HuntingRequest huntingRequest);
+    public ResponseEntity<HuntingDTO> createHunting(HuntingRequest huntingRequest,String code);
 
 }

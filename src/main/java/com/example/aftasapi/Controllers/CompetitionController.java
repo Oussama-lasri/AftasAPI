@@ -5,6 +5,7 @@ import com.example.aftasapi.BaseInterfaces.IBaseController;
 import com.example.aftasapi.DTOs.Response.CompetitionResponse;
 import com.example.aftasapi.Requests.CompetitionRequest;
 import com.example.aftasapi.Services.ICompetitionService;
+import com.example.aftasapi.Services.Impl.CompetitionServiceImpl;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,10 @@ import java.util.List;
 @CrossOrigin
 public class CompetitionController {
 
-    private final ICompetitionService competitionService ;
+    private final CompetitionServiceImpl competitionService ;
     private final ModelMapper modelMapper ;
 
-    public CompetitionController(ICompetitionService competitionService, ModelMapper modelMapper) {
+    public CompetitionController(CompetitionServiceImpl competitionService, ModelMapper modelMapper) {
         this.competitionService = competitionService;
         this.modelMapper = modelMapper;
     }
@@ -45,8 +46,9 @@ public class CompetitionController {
 
 
     @GetMapping("/{competition_id}")
-    public ResponseEntity<CompetitionDTO> getById(@PathVariable long competition_id) {
-        return null;
+    public ResponseEntity<CompetitionDTO> getById(@PathVariable String competition_id) {
+        CompetitionDTO competition = competitionService.findByCode(competition_id);
+        return ResponseEntity.status(HttpStatus.OK).body(competition);
     }
 
 

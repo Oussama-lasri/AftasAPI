@@ -20,7 +20,7 @@ public class FishDTO {
     private String name ;
 
     private double averageWeight ;
-    @JsonBackReference
+
     private LevelDTO level ;
     @JsonManagedReference
     private List<HuntingDTO> huntingList ;

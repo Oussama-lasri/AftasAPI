@@ -28,12 +28,12 @@ public class HuntingEntity {
 
     @ManyToOne
     @JoinColumn(name = "competitions_id")
-    @JsonManagedReference
+
     private CompetitionEntity competition ;
 
     @ManyToOne
     @JoinColumn(name = "members_id")
-    @JsonManagedReference
+
     private MemberEntity member ;
 
 }
