@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 public class CompetitionEntity {
     @Id
     private String code ;

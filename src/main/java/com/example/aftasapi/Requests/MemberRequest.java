@@ -27,7 +27,6 @@ public class MemberRequest {
     @NotBlank(message = "nationality cannot be blank")
     private String nationality ;
     @NotNull(message = "identityDocument cannot be null")
-    @NotBlank(message = "identityDocument cannot be blank")
     private IdentityDocumentType identityDocument ;
     @NotNull(message = "identityNumber cannot be null")
     @NotBlank(message = "identityNumber cannot be blank")
