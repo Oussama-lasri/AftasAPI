@@ -40,7 +40,6 @@ public class CompetitionController {
     @GetMapping
     public ResponseEntity<CompetitionResponse>  getAll( @RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) int pageNumber,
                                                         @RequestParam(value = "pageSize" , defaultValue = "10" , required = false) int pageSize) {
-       // List<CompetitionDTO> competitions = competitionService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(competitionService.allCompetitionWithPagination(pageNumber,pageSize)) ;
     }
 
@@ -61,14 +60,4 @@ public class CompetitionController {
         return null;
     }
 
-//    @GetMapping
-//    public ResponseEntity<CompetitionResponse> allCompetitionWithPagination(
-//            @RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) int pageNumber,
-//            @RequestParam(value = "pageSize" , defaultValue = "10" , required = false) int pageSize)
-//    {
-//
-//
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(competitionService.allCompetitionWithPagination(pageNumber,pageSize)) ;
-//    }
 }

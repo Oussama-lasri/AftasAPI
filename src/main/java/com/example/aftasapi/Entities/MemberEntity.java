@@ -54,5 +54,7 @@ public class MemberEntity {
     @OneToMany(mappedBy = "member" , fetch = FetchType.LAZY)
     private List<RankingEntity> rankingList ;
 
+    // relation between user and member
+
 
 }
